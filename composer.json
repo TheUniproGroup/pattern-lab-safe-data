@@ -1,0 +1,31 @@
+{
+  "name":             "FabbDev/pattern-lab-safe-data",
+  "description":      "Faker Support for Pattern Lab",
+  "keywords":         ["pattern lab", "autoescape", "escape"],
+  "type":             "patternlab-plugin",
+  "authors": [
+    {
+      "name":         "Andy Fowlston",
+      "email":        "andy@fabbdev.com"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "FabbDev\\SafeData": "src/"
+    }
+  },
+  "require": {
+    "pattern-lab/core": "^2.9"
+  },
+  "extra": {
+    "patternlab": {
+      "config": {
+        "plugins": {
+          "safe-data": {
+            "enabled": true
+          }
+        }
+      }
+    }
+  }
+}
