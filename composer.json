@@ -1,6 +1,6 @@
 {
   "name":             "FabbDev/pattern-lab-safe-data",
-  "description":      "Faker Support for Pattern Lab",
+  "description":      "Allows data from the data directory to be marked as safe",
   "keywords":         ["pattern lab", "autoescape", "escape"],
   "type":             "patternlab-plugin",
   "authors": [
@@ -15,17 +15,23 @@
     }
   },
   "require": {
-    "pattern-lab/core": "^2.9"
+    "php": "^7.1",
+    "pattern-lab/core": "^2.9",
+    "twig/twig": "^2.6"
   },
   "extra": {
     "patternlab": {
       "config": {
         "plugins": {
-          "safe-data": {
-            "enabled": true
+          "safeData": {
+            "enabled": false,
+            "charset": "UTF-8"
           }
         }
       }
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }
