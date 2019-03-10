@@ -9,8 +9,6 @@ use PatternLab\Listener;
 /**
  * Provides a Pattern Lab listener to prevent data values from being escaped.
  *
- * @todo Add tests.
- * @todo Try with PSR-4.
  * @todo Only match on 'MakeSafe() >' and share the prefix.
  * @todo Change from MakeSafe to MarkSafe - this doesn't transform anything.
  */
