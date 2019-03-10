@@ -11,6 +11,7 @@ use PatternLab\Listener;
  *
  * @todo Add tests.
  * @todo Try with PSR-4.
+ * @todo Only match on 'MakeSafe() >' and share the prefix.
  * @todo Change from MakeSafe to MarkSafe - this doesn't transform anything.
  */
 class PatternLabListener extends Listener {
@@ -18,7 +19,7 @@ class PatternLabListener extends Listener {
   /**
    * The plugin's name in the Pattern Lab configuration and composer.json.
    */
-  protected const PLUGIN_NAME = 'safeData';
+  const PLUGIN_NAME = 'safeData';
 
   /**
    * Create the listener and subscribe it to the data loaded event.

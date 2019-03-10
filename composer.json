@@ -14,10 +14,21 @@
       "FabbDev\\SafeData\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "FabbDev\\SafeData\\Tests\\": "tests/"
+    }
+  },
   "require": {
-    "php": "^7.1",
+    "php": "^7",
     "pattern-lab/core": "^2.9",
     "twig/twig": "^1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7"
+  },
+  "config": {
+    "sort-packages": true
   },
   "extra": {
     "patternlab": {
@@ -30,8 +41,5 @@
         }
       }
     }
-  },
-  "config": {
-    "sort-packages": true
   }
 }
