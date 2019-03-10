@@ -8,11 +8,6 @@ use PatternLab\Listener;
 
 /**
  * Provides a Pattern Lab listener to prevent data values from being escaped.
- *
- * @todo Add tests.
- * @todo Try with PSR-4.
- * @todo Only match on 'MakeSafe() >' and share the prefix.
- * @todo Change from MakeSafe to MarkSafe - this doesn't transform anything.
  */
 class PatternLabListener extends Listener {
 
@@ -22,6 +17,11 @@ class PatternLabListener extends Listener {
   const PLUGIN_NAME = 'safeData';
 
   /**
+   * The prefix used to indicate a value should be marked safe.
+   */
+  protected const PREFIX = 'MarkSafe() >';
+
+  /**
    * Create the listener and subscribe it to the data loaded event.
    */
   public function __construct() {
@@ -29,7 +29,7 @@ class PatternLabListener extends Listener {
   }
 
   /**
-   * Process values matching the MakeSafe() patterns.
+   * Process values matching the safe data pattern.
    *
    * When found, extract the string values and ensure it won't be escaped by
    * Twig.
@@ -46,11 +46,16 @@ class PatternLabListener extends Listener {
     $data = Data::get();
     array_walk_recursive($data, function (&$value) use ($charset) {
       $matches = [];
-      if (preg_match('/^MakeSafe\((.*)\)$/ms', $value, $matches)) {
-        $value = new \Twig_Markup($matches[1], $charset);
-      }
-      elseif (preg_match('/^MakeSafe\(\)\s*>(.*)$/ms', $value, $matches)) {
-        $value = new \Twig_Markup(ltrim($matches[1]), $charset);
+      $prefix = preg_quote(static::PREFIX, '/');
+
+      $pattern =
+        '/^' .              // Match from the start.
+        $prefix .           // Ensure the prefix is first.
+        '(\s|\r\n|\r|\n)' . // Require a space or newline after the prefix.
+        '(.*)$' .           // Match the remainder of the string.
+        '/ms';              // Do multi-line match and allow `.` to match EOL.
+      if (preg_match($pattern, $value, $matches)) {
+        $value = new \Twig_Markup(ltrim($matches[2]), $charset);
       }
     });
 
@@ -68,6 +73,19 @@ class PatternLabListener extends Listener {
    */
   protected function getConfig($name) {
     return Config::getOption('plugins.' . static::PLUGIN_NAME . ".$name");
+  }
+
+  /**
+   * Update a data value to be marked as safe.
+   *
+   * @param string $value
+   *   The value to be marked safe.
+   *
+   * @return string
+   *   The updated value.
+   */
+  public static function markSafe($value) {
+    return static::PREFIX . ' ' . $value;
   }
 
 }

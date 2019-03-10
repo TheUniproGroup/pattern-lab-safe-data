@@ -20,7 +20,7 @@
     }
   },
   "require": {
-    "php": "^7",
+    "php": "^7.1",
     "pattern-lab/core": "^2.9",
     "twig/twig": "^1"
   },
