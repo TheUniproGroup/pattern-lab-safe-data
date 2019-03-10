@@ -20,7 +20,7 @@ To add the plugin to your project using [Composer] type:
 
 ```bash
 compose config repositories.pattern-lab-safe-data '{"type": "vcs", "url": "https://github.com/FabbDev/pattern-lab-php-safe-data"}'
-composer require pattern-lab/pattern-lab-safe-data
+composer require fabb-dev/pattern-lab-safe-data
 ```
 
 ## Usage
