@@ -11,8 +11,6 @@ use PHPUnit\Framework\TestCase;
  * Test the safe data pattern lab listener.
  *
  * @group SafeData
- *
- * @todo Test newline chomping after `>`.
  */
 class PatternLabListenerTest extends TestCase {
 
@@ -45,8 +43,10 @@ class PatternLabListenerTest extends TestCase {
 
   /**
    * Test marking data values as safe.
+   *
+   * @dataProvider provideSafeStrings()
    */
-  public function testProcessSafeData() {
+  public function testProcessSafeData($raw_value, $content) {
     Config::setOption('plugins.safeData.enabled', true);
     Data::setOption('safe', 'MakeSafe() > value');
 
@@ -102,7 +102,21 @@ class PatternLabListenerTest extends TestCase {
   }
 
   /**
+   * Provide raw data values for processing and the expected processed output.
+   *
+   * @return \Generator
+   *
+   * @see \FabbDev\SafeData\Tests\PatternLabListenerTest::testProcessSafeData()
+   */
+  public function provideSafeStrings() {
+    yield ['MakeSafe() > value', 'value'];
+    yield ["MakeSafe() >\n value", 'value'];
+  }
+
+  /**
    * Provide UTF-8 strings with character lengths to test the 'charset' option.
+   *
+   * @see \FabbDev\SafeData\Tests\PatternLabListenerTest::testCharacterSet()
    */
   public function provideCharacterSetStrings() {
     yield ['Iñtërnâtiônàlizætiøn', 20];
