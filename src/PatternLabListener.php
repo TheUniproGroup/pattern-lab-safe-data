@@ -9,7 +9,6 @@ use PatternLab\Listener;
 /**
  * Provides a Pattern Lab listener to prevent data values from being escaped.
  *
- * @todo Only match on 'MakeSafe() >' and share the prefix.
  * @todo Change from MakeSafe to MarkSafe - this doesn't transform anything.
  */
 class PatternLabListener extends Listener {
@@ -18,6 +17,11 @@ class PatternLabListener extends Listener {
    * The plugin's name in the Pattern Lab configuration and composer.json.
    */
   const PLUGIN_NAME = 'safeData';
+
+  /**
+   * The prefix used to indicate a value should be marked safe.
+   */
+  protected const PREFIX = 'MakeSafe() > ';
 
   /**
    * Create the listener and subscribe it to the data loaded event.
@@ -44,10 +48,8 @@ class PatternLabListener extends Listener {
     $data = Data::get();
     array_walk_recursive($data, function (&$value) use ($charset) {
       $matches = [];
-      if (preg_match('/^MakeSafe\((.*)\)$/ms', $value, $matches)) {
-        $value = new \Twig_Markup($matches[1], $charset);
-      }
-      elseif (preg_match('/^MakeSafe\(\)\s*>(.*)$/ms', $value, $matches)) {
+      $prefix = preg_quote(static::PREFIX, '/');
+      if (preg_match('/^' . $prefix . '(.*)$/ms', $value, $matches)) {
         $value = new \Twig_Markup(ltrim($matches[1]), $charset);
       }
     });
@@ -66,6 +68,19 @@ class PatternLabListener extends Listener {
    */
   protected function getConfig($name) {
     return Config::getOption('plugins.' . static::PLUGIN_NAME . ".$name");
+  }
+
+  /**
+   * Update a data value to be marked as safe.
+   *
+   * @param string $value
+   *   The value to be marked safe.
+   *
+   * @return string
+   *   The updated value.
+   */
+  public static function markSafe($value) {
+    return static::PREFIX . $value;
   }
 
 }
