@@ -1,5 +1,5 @@
 {
-  "name":             "FabbDev/pattern-lab-safe-data",
+  "name":             "fabb-dev/pattern-lab-safe-data",
   "description":      "Allows data from the data directory to be marked as safe",
   "keywords":         ["pattern lab", "autoescape", "escape"],
   "type":             "patternlab-plugin",
