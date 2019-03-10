@@ -28,7 +28,7 @@ composer require pattern-lab/pattern-lab-safe-data
 You can mark data as safe in your json or yml data files by using this format: 
 
 ```
-"key": "MakeSafe() > This will <em>not</em> get escaped."
+"key": "MarkSafe() > This will <em>not</em> get escaped."
 ```
 
 ## Disabling the Plugin

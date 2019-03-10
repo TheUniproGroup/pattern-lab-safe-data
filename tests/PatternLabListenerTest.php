@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test the safe data pattern lab listener.
  *
+ * @coversDefaultClass \FabbDev\SafeData\PatternLabListener
  * @group SafeData
  */
 class PatternLabListenerTest extends TestCase {
@@ -32,23 +33,24 @@ class PatternLabListenerTest extends TestCase {
    * @see https://github.com/pattern-lab/patternlab-php-core/issues/172
    */
   public function testDisabled() {
-    Data::setOption('safe', 'MakeSafe() > value');
+    Data::setOption('safe', 'MarkSafe() > value');
 
     $listener = new PatternLabListener();
     $listener->processSafeData();
 
     $safe = Data::getOption('safe');
-    $this->assertSame('MakeSafe() > value', $safe);
+    $this->assertSame('MarkSafe() > value', $safe);
   }
 
   /**
    * Test marking data values as safe.
    *
+   * @covers ::processSafeData
    * @dataProvider provideSafeStrings()
    */
   public function testProcessSafeData($raw_value, $content) {
     Config::setOption('plugins.safeData.enabled', true);
-    Data::setOption('safe', 'MakeSafe() > value');
+    Data::setOption('safe', $raw_value);
 
     $listener = new PatternLabListener();
     $listener->processSafeData();
@@ -57,12 +59,14 @@ class PatternLabListenerTest extends TestCase {
     $safe = Data::getOption('safe');
 
     // The value with the safe data prefix should be twig markup.
+    $this->assertSame($content, (string) $safe);
     $this->assertTrue($safe instanceof \Twig_Markup);
-    $this->assertSame('value', (string) $safe);
   }
 
   /**
    * Test normal values remain unaffected.
+   *
+   * @covers ::processSafeData
    */
   public function testProcessSafeDataNoMatch() {
     Config::setOption('plugins.safeData.enabled', true);
@@ -81,6 +85,7 @@ class PatternLabListenerTest extends TestCase {
   /**
    * Test the character set.
    *
+   * @covers ::processSafeData
    * @dataProvider provideCharacterSetStrings()
    */
   public function testCharacterSet($string, $length) {
@@ -89,7 +94,7 @@ class PatternLabListenerTest extends TestCase {
       return;
     }
 
-    Data::setOption('safe', "MakeSafe() > $string");
+    Data::setOption('safe', "MarkSafe() > $string");
     Config::setOption('plugins.safeData.enabled', true);
     Config::setOption('plugins.safeData.charset', 'UTF-8');
 
@@ -102,6 +107,25 @@ class PatternLabListenerTest extends TestCase {
   }
 
   /**
+   * Test the static markSafe() method will cause a value to be marked safe.
+   *
+   * @covers ::markSafe
+   */
+  public function testMarkSafe() {
+    Data::setOption('safe', PatternLabListener::markSafe('value'));
+    Config::setOption('plugins.safeData.enabled', true);
+
+    $listener = new PatternLabListener();
+    $listener->processSafeData();
+
+    /** @var \Twig_Markup $safe */
+    $safe = Data::getOption('safe');
+    // The value with the safe data prefix should be twig markup.
+    $this->assertSame('value', (string) $safe);
+    $this->assertTrue($safe instanceof \Twig_Markup);
+  }
+
+  /**
    * Provide raw data values for processing and the expected processed output.
    *
    * @return \Generator
@@ -109,8 +133,9 @@ class PatternLabListenerTest extends TestCase {
    * @see \FabbDev\SafeData\Tests\PatternLabListenerTest::testProcessSafeData()
    */
   public function provideSafeStrings() {
-    yield ['MakeSafe() > value', 'value'];
-    yield ["MakeSafe() >\n value", 'value'];
+    yield ['MarkSafe() > value', 'value'];
+    yield ["MarkSafe() >\n value", 'value'];
+    yield ["MarkSafe() >\nline1\nline2", "line1\nline2"];
   }
 
   /**

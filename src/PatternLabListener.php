@@ -8,8 +8,6 @@ use PatternLab\Listener;
 
 /**
  * Provides a Pattern Lab listener to prevent data values from being escaped.
- *
- * @todo Change from MakeSafe to MarkSafe - this doesn't transform anything.
  */
 class PatternLabListener extends Listener {
 
@@ -21,7 +19,7 @@ class PatternLabListener extends Listener {
   /**
    * The prefix used to indicate a value should be marked safe.
    */
-  protected const PREFIX = 'MakeSafe() > ';
+  protected const PREFIX = 'MarkSafe() >';
 
   /**
    * Create the listener and subscribe it to the data loaded event.
@@ -31,7 +29,7 @@ class PatternLabListener extends Listener {
   }
 
   /**
-   * Process values matching the MakeSafe() patterns.
+   * Process values matching the safe data pattern.
    *
    * When found, extract the string values and ensure it won't be escaped by
    * Twig.
@@ -49,8 +47,15 @@ class PatternLabListener extends Listener {
     array_walk_recursive($data, function (&$value) use ($charset) {
       $matches = [];
       $prefix = preg_quote(static::PREFIX, '/');
-      if (preg_match('/^' . $prefix . '(.*)$/ms', $value, $matches)) {
-        $value = new \Twig_Markup(ltrim($matches[1]), $charset);
+
+      $pattern =
+        '/^' .              // Match from the start.
+        $prefix .           // Ensure the prefix is first.
+        '(\s|\r\n|\r|\n)' . // Require a space or newline after the prefix.
+        '(.*)$' .           // Match the remainder of the string.
+        '/ms';              // Do multi-line match and allow `.` to match EOL.
+      if (preg_match($pattern, $value, $matches)) {
+        $value = new \Twig_Markup(ltrim($matches[2]), $charset);
       }
     });
 
@@ -80,7 +85,7 @@ class PatternLabListener extends Listener {
    *   The updated value.
    */
   public static function markSafe($value) {
-    return static::PREFIX . $value;
+    return static::PREFIX . ' ' . $value;
   }
 
 }
