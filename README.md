@@ -1,4 +1,6 @@
-# Safe Data Pattern Lab PHP plugin
+[![Build Status](https://travis-ci.org/FabbDev/pattern-lab-php-safe-data.svg?branch=master)](https://travis-ci.org/FabbDev/pattern-lab-php-safe-data)
+
+# Safe Data Pattern Lab PHP plugin 
 
 The Safe Data plugin allows data from the data directory to be marked as safe when used with PHP Pattern Lab and Twig.
 
