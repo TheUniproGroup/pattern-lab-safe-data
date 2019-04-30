@@ -2,6 +2,7 @@
 
 namespace TheUniproGroup\SafeData\Tests;
 
+use Twig_Markup;
 use TheUniproGroup\SafeData\PatternLabListener;
 use PatternLab\Config;
 use PatternLab\Data;
@@ -60,7 +61,7 @@ class PatternLabListenerTest extends TestCase {
 
     // The value with the safe data prefix should be twig markup.
     $this->assertSame($content, (string) $safe);
-    $this->assertTrue($safe instanceof \Twig_Markup);
+    $this->assertTrue($safe instanceof Twig_Markup);
   }
 
   /**
@@ -122,7 +123,7 @@ class PatternLabListenerTest extends TestCase {
     $safe = Data::getOption('safe');
     // The value with the safe data prefix should be twig markup.
     $this->assertSame('value', (string) $safe);
-    $this->assertTrue($safe instanceof \Twig_Markup);
+    $this->assertTrue($safe instanceof Twig_Markup);
   }
 
   /**
