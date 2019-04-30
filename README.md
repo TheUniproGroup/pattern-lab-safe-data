@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/TheUniproGroup/pattern-lab-php-safe-data.svg?branch=master)](https://travis-ci.org/TheUniproGroup/pattern-lab-php-safe-data)
+[![Build Status](https://travis-ci.org/TheUniproGroup/pattern-lab-safe-data.svg?branch=master)](https://travis-ci.org/TheUniproGroup/pattern-lab-safe-data)
 
 # Safe Data Pattern Lab PHP plugin 
 
@@ -19,7 +19,7 @@ field values.
 To add the plugin to your project using [Composer] type:
 
 ```bash
-compose config repositories.pattern-lab-safe-data '{"type": "vcs", "url": "https://github.com/TheUniproGroup/pattern-lab-php-safe-data"}'
+composer config repositories.pattern-lab-safe-data '{"type": "vcs", "url": "https://github.com/TheUniproGroup/pattern-lab-safe-data"}'
 composer require the-unipro-group/pattern-lab-safe-data
 ```
 
