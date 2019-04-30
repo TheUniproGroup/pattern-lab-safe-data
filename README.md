@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/FabbDev/pattern-lab-php-safe-data.svg?branch=master)](https://travis-ci.org/FabbDev/pattern-lab-php-safe-data)
+[![Build Status](https://travis-ci.org/TheUniproGroup/pattern-lab-php-safe-data.svg?branch=master)](https://travis-ci.org/TheUniproGroup/pattern-lab-php-safe-data)
 
 # Safe Data Pattern Lab PHP plugin 
 
@@ -19,8 +19,8 @@ field values.
 To add the plugin to your project using [Composer] type:
 
 ```bash
-compose config repositories.pattern-lab-safe-data '{"type": "vcs", "url": "https://github.com/FabbDev/pattern-lab-php-safe-data"}'
-composer require fabb-dev/pattern-lab-safe-data
+compose config repositories.pattern-lab-safe-data '{"type": "vcs", "url": "https://github.com/TheUniproGroup/pattern-lab-php-safe-data"}'
+composer require the-unipro-group/pattern-lab-safe-data
 ```
 
 ## Usage
@@ -41,6 +41,6 @@ php core/console --config --set plugins.safeData.enabled=false
 
 ## Todo
 
-- Decide on final living place add to packagist.
+- Add to packagist.
 
 [Composer]: https://getcomposer.org/

@@ -1,8 +1,8 @@
 <?php
 
-namespace FabbDev\SafeData\Tests;
+namespace TheUniproGroup\SafeData\Tests;
 
-use FabbDev\SafeData\PatternLabListener;
+use TheUniproGroup\SafeData\PatternLabListener;
 use PatternLab\Config;
 use PatternLab\Data;
 use PHPUnit\Framework\TestCase;
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test the safe data pattern lab listener.
  *
- * @coversDefaultClass \FabbDev\SafeData\PatternLabListener
+ * @coversDefaultClass \TheUniproGroup\SafeData\PatternLabListener
  * @group SafeData
  */
 class PatternLabListenerTest extends TestCase {
@@ -130,7 +130,7 @@ class PatternLabListenerTest extends TestCase {
    *
    * @return \Generator
    *
-   * @see \FabbDev\SafeData\Tests\PatternLabListenerTest::testProcessSafeData()
+   * @see \TheUniproGroup\SafeData\Tests\PatternLabListenerTest::testProcessSafeData()
    */
   public function provideSafeStrings() {
     yield ['MarkSafe() > value', 'value'];
@@ -141,7 +141,7 @@ class PatternLabListenerTest extends TestCase {
   /**
    * Provide UTF-8 strings with character lengths to test the 'charset' option.
    *
-   * @see \FabbDev\SafeData\Tests\PatternLabListenerTest::testCharacterSet()
+   * @see \TheUniproGroup\SafeData\Tests\PatternLabListenerTest::testCharacterSet()
    */
   public function provideCharacterSetStrings() {
     yield ['Iñtërnâtiônàlizætiøn', 20];

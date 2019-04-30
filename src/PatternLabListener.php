@@ -1,6 +1,6 @@
 <?php
 
-namespace FabbDev\SafeData;
+namespace TheUniproGroup\SafeData;
 
 use PatternLab\Config;
 use PatternLab\Data;

@@ -1,5 +1,5 @@
 {
-  "name":             "fabb-dev/pattern-lab-safe-data",
+  "name":             "the-unipro-group/pattern-lab-safe-data",
   "description":      "Allows data from the data directory to be marked as safe",
   "keywords":         ["pattern lab", "autoescape", "escape"],
   "type":             "patternlab-plugin",
@@ -11,12 +11,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "FabbDev\\SafeData\\": "src/"
+      "TheUniproGroup\\SafeData\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "FabbDev\\SafeData\\Tests\\": "tests/"
+      "TheUniproGroup\\SafeData\\Tests\\": "tests/"
     }
   },
   "require": {
